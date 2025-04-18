@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
 import Link from "next/link";
 import { Article } from "@/types/article.types";
 import SearchFilter from "../SearchFilter/SearchFilter";
@@ -9,6 +9,7 @@ import NewsCard from "../NewsCard/NewsCard";
 import styles from "./NewsList.module.scss";
 import gsap from "gsap";
 import NewsCardSkeleton from "../NewsCardSkeleton/NewsCardSkeleton";
+import { FavoritesContext } from "@/context/FavoritesContext";
 
 interface Props {
   articles: Article[];
@@ -26,8 +27,13 @@ export default function NewsList({
   category,
 }: Props) {
   const [loading, setLoading] = useState(true);
+  const [showFavorites, setShowFavorites] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const totalPages = Math.ceil(totalResults / 10);
+
+  const { favorites } = useContext(FavoritesContext);
+
+  const displayedArticles = showFavorites ? favorites : articles;
 
   const params = [
     `page=${page}`,
@@ -51,22 +57,38 @@ export default function NewsList({
     return () => clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+    if (favorites.length > 0) {
+      setShowFavorites(true);
+    }
+  }, [favorites]);
+
   return (
     <div className={styles.paper} ref={containerRef}>
       <div className={styles.filters}>
         <SearchFilter defaultValue={q} />
         <CategoryFilter defaultValue={category} />
+        <button
+          className={styles.favoriteToggle}
+          onClick={() => setShowFavorites((prev) => !prev)}
+        >
+          {showFavorites ? "Все новости" : "Избранное"}
+        </button>
       </div>
 
       <div className={styles.columns}>
-        {loading
-          ? Array.from({ length: 6 }).map((_, idx) => (
-              <NewsCardSkeleton key={idx} />
-            ))
-          : articles.map((a) => <NewsCard key={a.url} article={a} />)}
+        {loading ? (
+          Array.from({ length: 6 }).map((_, idx) => (
+            <NewsCardSkeleton key={idx} />
+          ))
+        ) : displayedArticles.length === 0 ? (
+          <p className={styles.empty}>Пусто</p>
+        ) : (
+          displayedArticles.map((a) => <NewsCard key={a.url} article={a} />)
+        )}
       </div>
 
-      {!loading && (
+      {!loading && !showFavorites && (
         <div className={styles.pagination}>
           {page > 1 && (
             <Link

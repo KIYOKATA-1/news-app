@@ -24,9 +24,9 @@ export function FavoritesProvider({ children }: { children: React.ReactNode }) {
   }, [favorites]);
 
   const toggleFavorite = (article: Article) => {
-    setFavorites(prev =>
-      prev.some(a => a.url === article.url)
-        ? prev.filter(a => a.url !== article.url)
+    setFavorites((prev) =>
+      prev.some((a) => a.url === article.url)
+        ? prev.filter((a) => a.url !== article.url)
         : [...prev, article]
     );
   };

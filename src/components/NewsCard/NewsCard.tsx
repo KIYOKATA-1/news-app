@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useContext } from "react";
 import { CiImageOff } from "react-icons/ci";
 import { Article } from "@/types/article.types";
 import styles from "./NewsCard.module.scss";
 import gsap from "gsap";
+import { FavoritesContext } from "@/context/FavoritesContext";
 
 interface Props {
   article: Article;
@@ -20,6 +21,9 @@ export default function NewsCard({ article }: Props) {
     month: "2-digit",
     year: "numeric",
   });
+
+  const { favorites, toggleFavorite } = useContext(FavoritesContext);
+  const isFavorite = favorites.some((a) => a.url === article.url);
 
   useEffect(() => {
     if (cardRef.current) {
@@ -50,9 +54,26 @@ export default function NewsCard({ article }: Props) {
         <div className={styles.info}>
           <h3 className={styles.title}>{article.title}</h3>
           <p className={styles.date}>{formattedDate}</p>
-          <Link href={`/article/${slug}`} className={styles.button}>
-            Читать больше
-          </Link>
+          <div className={styles.actions}>
+            <Link href={`/article/${slug}`} className={styles.button}>
+              Читать больше
+            </Link>
+            {isFavorite ? (
+              <button
+                className={styles.remove}
+                onClick={() => toggleFavorite(article)}
+              >
+                Убрать из избранного
+              </button>
+            ) : (
+              <button
+                className={styles.favorite}
+                onClick={() => toggleFavorite(article)}
+              >
+                В избранное
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </div>
