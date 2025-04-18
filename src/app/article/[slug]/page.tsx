@@ -1,31 +1,24 @@
-"use client";
-
-import Image from "next/image";
-import React from "react";
-import { api } from "@/api/api";
-import { Article } from "@/types/article.types";
+import { fetchSingleArticle } from "@/api/news.api";
 import styles from "./ArticlePage.module.scss";
+import Image from "next/image";
+import { Article } from "@/types/article.types";
 
 export const dynamic = "force-dynamic";
 
 export default async function ArticlePage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: { slug: string };
 }) {
-  const { slug } = await params;
-  const title = decodeURIComponent(slug);
+  const title = decodeURIComponent(params.slug);
 
   let article: Article | null = null;
   let error = false;
 
   try {
-    const resp = await api.get<{ articles: Article[] }>("/everything", {
-      params: { qInTitle: title, pageSize: 1 },
-    });
-    article = resp.data.articles[0] || null;
+    article = await fetchSingleArticle(title);
   } catch (e) {
-    console.error("Не удалось загрузить статью:", e);
+    console.error("Ошибка статьи:", e);
     error = true;
   }
 
@@ -33,7 +26,6 @@ export default async function ArticlePage({
     return (
       <main className={styles.container}>
         <h1 className={styles.title}>Статья недоступна</h1>
-        <p className={styles.meta}>Не удалось получить данные статьи. Попробуйте позже.</p>
       </main>
     );
   }

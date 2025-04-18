@@ -1,4 +1,4 @@
-import { api } from "@/api/api";
+import { fetchTopHeadlines } from "@/api/news.api";
 import NewsList from "@/components/NewsList/NewsList";
 import { Article } from "@/types/article.types";
 import React from "react";
@@ -18,33 +18,18 @@ export default async function Home({
   let error = false;
 
   try {
-    const resp = await api.get<{
-      articles: Article[];
-      totalResults: number;
-    }>("/top-headlines", {
-      params: {
-        country: "us",
-        pageSize: 10,
-        page,
-        ...(q ? { q } : {}),
-        ...(category ? { category } : {}),
-      },
-    });
-    articles = resp.data.articles;
-    totalResults = resp.data.totalResults;
+    const data = await fetchTopHeadlines(page, q, category);
+    articles = data.articles;
+    totalResults = data.totalResults;
   } catch (e) {
-    console.error("Не удалось загрузить новости:", e);
+    console.error("Ошибка загрузки:", e);
     error = true;
   }
 
   if (error) {
     return (
       <main style={{ padding: 20 }}>
-        <h1>Новости недоступны</h1>
-        <p>
-          Не удалось подключиться к серверу новостей. Проверьте, пожалуйста, своё
-          интернет‑соединение или DNS.{" "}
-        </p>
+        <h1>Ошибка загрузки</h1>
       </main>
     );
   }
