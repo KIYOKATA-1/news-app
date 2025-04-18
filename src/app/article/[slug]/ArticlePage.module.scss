@@ -1,10 +1,13 @@
 .container {
+    width: 100%;
     max-width: 800px;
     margin: 0 auto;
     padding: 40px 20px;
-    background-color: #141414;
-    color: #fff;
-    min-height: 100vh;
+    background-color: #fdfdf5;
+    color: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   
     @media (max-width: 768px) {
       padding: 24px 16px;
@@ -13,29 +16,40 @@
   
   .title {
     font-size: clamp(1.5rem, 5vw, 2.5rem);
-    line-height: 1.2;
+    text-align: center;
     margin-bottom: 16px;
   }
   
   .meta {
     font-size: clamp(0.8rem, 2.5vw, 0.95rem);
-    color: #888;
+    color: #000;
     margin-bottom: 24px;
+    text-align: center;
   }
   
   .imageWrapper {
-    position: relative;
     width: 100%;
-    padding-top: 56.25%;
+    aspect-ratio: 16 / 9;
     border-radius: 8px;
     overflow: hidden;
+    position: relative;
     margin-bottom: 24px;
+    background: #222;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    .noImage {
+      color: #666;
+      font-size: 1rem;
+    }
   }
   
   .content {
+    width: 100%;
     font-size: clamp(0.95rem, 2.4vw, 1rem);
     line-height: 1.6;
-    color: #ddd;
+    color: #000;
     margin-bottom: 32px;
   
     p {

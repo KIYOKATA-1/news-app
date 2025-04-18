@@ -1,16 +1,21 @@
+export const dynamic = "force-dynamic";
+
 import { fetchSingleArticle } from "@/api/news.api";
 import styles from "./ArticlePage.module.scss";
 import Image from "next/image";
 import { Article } from "@/types/article.types";
 
-export const dynamic = "force-dynamic";
+interface Params {
+  slug: string;
+}
 
 export default async function ArticlePage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<Params>;
 }) {
-  const title = decodeURIComponent(params.slug);
+  const { slug } = await params;
+  const title = decodeURIComponent(slug);
 
   let article: Article | null = null;
   let error = false;
@@ -45,16 +50,18 @@ export default async function ArticlePage({
         {article.author ?? "Unknown"} — {formattedDate}
       </p>
 
-      {article.urlToImage && (
-        <div className={styles.imageWrapper}>
+      <div className={styles.imageWrapper}>
+        {article.urlToImage ? (
           <Image
             src={article.urlToImage}
             alt={article.title}
             fill
             style={{ objectFit: "cover" }}
           />
-        </div>
-      )}
+        ) : (
+          <div className={styles.noImage}>Нет изображения</div>
+        )}
+      </div>
 
       <article className={styles.content}>
         <p>{article.content ?? article.description}</p>
@@ -66,7 +73,7 @@ export default async function ArticlePage({
         rel="noopener noreferrer"
         className={styles.readOriginal}
       >
-        Читать оригинал →
+        Читать оригинал
       </a>
     </main>
   );

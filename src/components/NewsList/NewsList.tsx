@@ -10,6 +10,7 @@ import styles from "./NewsList.module.scss";
 import gsap from "gsap";
 import NewsCardSkeleton from "../NewsCardSkeleton/NewsCardSkeleton";
 import { FavoritesContext } from "@/context/FavoritesContext";
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 
 interface Props {
   articles: Article[];
@@ -95,7 +96,7 @@ export default function NewsList({
               href={`/?${params.replace(`page=${page}`, `page=${page - 1}`)}`}
               className={styles.pageLink}
             >
-              ← Назад
+              <FaAngleLeft /> Назад
             </Link>
           )}
           {page < totalPages && (
@@ -103,7 +104,7 @@ export default function NewsList({
               href={`/?${params.replace(`page=${page}`, `page=${page + 1}`)}`}
               className={styles.pageLink}
             >
-              Вперед →
+              Вперед <FaAngleRight />
             </Link>
           )}
         </div>

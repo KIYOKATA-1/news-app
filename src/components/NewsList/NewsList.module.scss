@@ -1,78 +1,91 @@
 .paper {
-  max-width: 1200px;
-  margin: 40px auto;
-  padding: 40px 30px;
-  background: #fdfdf5;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-  border: 1px solid #eee;
-  border-radius: 4px;
-}
-
-.filters {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-bottom: 24px;
-}
-
-.columns {
-  column-count: 3;
-  column-gap: 24px;
-}
-
-.columns > * {
-  break-inside: avoid;
-  margin-bottom: 24px;
-}
-
-.pagination {
-  margin-top: 32px;
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-}
-
-.pageLink {
-  color: #333;
-  font-weight: 600;
-  text-decoration: none;
-
-  &:hover {
-    text-decoration: underline;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 40px 30px;
+    background: #fdfdf5;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    border: 1px solid #eee;
+    border-radius: 4px;
   }
-}
-
-.favoriteToggle {
-  background: #e50914;
-  color: #fff;
-  border: none;
-  padding: 8px 12px;
-  font-weight: 600;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-
-  &:hover {
-    background: #b20710;
+  
+  .filters {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
   }
-}
-
-.empty {
-  font-size: 18px;
-  align-self: center;
-  font-weight: 500;
-  margin: 40px 0;
-  color: #666;
-}
-
-@media (max-width: 1023px) {
+  
   .columns {
-    column-count: 2;
+    column-count: 3;
+    column-gap: 24px;
   }
-}
-
-@media (max-width: 768px) {
-  .columns {
-    column-count: 1;
+  
+  .columns > * {
+    break-inside: avoid;
+    margin-bottom: 24px;
   }
-}
+  
+  .empty {
+    font-size: 18px;
+    font-weight: 500;
+    color: #666;
+    text-align: center;
+    margin: 40px 0;
+  }
+  
+  .pagination {
+    margin-top: 32px;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+  }
+  
+  .pageLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    font-weight: 600;
+    color: #333;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  
+    &:hover {
+      text-decoration: underline;
+      color: #000;
+    }
+  
+    .icon {
+      display: inline-block;
+      font-size: 1.2em;
+      vertical-align: middle;
+    }
+  }
+  
+  .favoriteToggle {
+    background: #e50914;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  
+    &:hover {
+      background: #b20710;
+    }
+  }
+  
+  @media (max-width: 1023px) {
+    .columns {
+      column-count: 2;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .columns {
+      column-count: 1;
+    }
+  }
+  
