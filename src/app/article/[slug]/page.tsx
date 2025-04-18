@@ -1,7 +1,7 @@
-
 import Image from "next/image";
 
 import { Article } from "@/types/article.types";
+import React from "react";
 import { api } from "@/api/api";
 
 export const dynamic = "force-dynamic";
@@ -14,17 +14,27 @@ export default async function ArticlePage({
   const { slug } = await params;
   const title = decodeURIComponent(slug);
 
-  const { data } = await api.get<{ articles: Article[] }>(
-    "/everything",
-    {
-      params: {
-        qInTitle: title,
-        pageSize: 1,
-      },
-    }
-  );
+  let article: Article | null = null;
+  let error = false;
 
-  const article = data.articles[0];
+  try {
+    const resp = await api.get<{ articles: Article[] }>("/everything", {
+      params: { qInTitle: title, pageSize: 1 },
+    });
+    article = resp.data.articles[0] || null;
+  } catch (e) {
+    console.error("Не удалось загрузить статью:", e);
+    error = true;
+  }
+
+  if (error || !article) {
+    return (
+      <main style={{ padding: 20 }}>
+        <h1>Статья недоступна</h1>
+        <p>Не удалось получить данные статьи. Попробуйте позже.</p>
+      </main>
+    );
+  }
 
   return (
     <main style={{ padding: 20 }}>

@@ -4,7 +4,9 @@ import Image from "next/image";
 import { Article } from "@/types/article.types";
 import styles from "./NewsCard.module.scss";
 
-interface Props { article: Article; }
+interface Props {
+  article: Article;
+}
 
 export default function NewsCard({ article }: Props) {
   const slug = encodeURIComponent(article.title);
@@ -27,7 +29,13 @@ export default function NewsCard({ article }: Props) {
         <p className={styles.description}>{article.description || ""}</p>
       </div>
       <div className={styles.date}>
-        {new Date(article.publishedAt).toLocaleDateString()}
+        {(() => {
+          const d = new Date(article.publishedAt);
+          const day = String(d.getDate()).padStart(2, "0");
+          const month = String(d.getMonth() + 1).padStart(2, "0");
+          const year = d.getFullYear();
+          return `${day}.${month}.${year}`;
+        })()}
       </div>
     </Link>
   );
