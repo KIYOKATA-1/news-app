@@ -2,7 +2,7 @@
     max-width: 1200px;
     margin: 40px auto;
     padding: 40px 30px;
-    background: #fdfdf5; 
+    background: #fdfdf5;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
     border: 1px solid #eee;
     border-radius: 4px;
@@ -36,8 +36,21 @@
     color: #333;
     font-weight: 600;
     text-decoration: none;
+  
     &:hover {
       text-decoration: underline;
+    }
+  }
+  
+  @media (max-width: 1023px) {
+    .columns {
+      column-count: 2;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .columns {
+      column-count: 1;
     }
   }
   

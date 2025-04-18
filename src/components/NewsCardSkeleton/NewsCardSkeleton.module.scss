@@ -1,0 +1,51 @@
+.skeletonPoster {
+    width: 100%;
+    padding-top: 56.25%;
+    background: #ddd;
+    animation: pulse 1.5s infinite;
+    border-radius: 4px 4px 0 0;
+  }
+  
+  .skeletonInfo {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .skeletonTitle,
+  .skeletonDate,
+  .skeletonButton {
+    height: 12px;
+    background: #ddd;
+    border-radius: 4px;
+    animation: pulse 1.5s infinite;
+  }
+  
+  .skeletonTitle {
+    width: 80%;
+    height: 16px;
+  }
+  
+  .skeletonDate {
+    width: 40%;
+  }
+  
+  .skeletonButton {
+    width: 50%;
+    height: 28px;
+    margin-top: 10px;
+  }
+  
+  @keyframes pulse {
+    0% {
+      background-color: #eee;
+    }
+    50% {
+      background-color: #ddd;
+    }
+    100% {
+      background-color: #eee;
+    }
+  }
+  
