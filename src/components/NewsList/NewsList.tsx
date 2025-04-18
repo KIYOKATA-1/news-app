@@ -1,11 +1,13 @@
 "use client";
-import React from "react";
+
+import React, { useEffect, useRef } from "react";
 import Link from "next/link";
 import { Article } from "@/types/article.types";
 import SearchFilter from "../SearchFilter/SearchFilter";
 import CategoryFilter from "../CategoryFilter/CategoryFilter";
 import NewsCard from "../NewsCard/NewsCard";
 import styles from "./NewsList.module.scss";
+import gsap from "gsap";
 
 interface Props {
   articles: Article[];
@@ -22,6 +24,7 @@ export default function NewsList({
   q,
   category,
 }: Props) {
+  const containerRef = useRef<HTMLDivElement>(null);
   const totalPages = Math.ceil(totalResults / 10);
   const params = [
     `page=${page}`,
@@ -31,14 +34,24 @@ export default function NewsList({
     .filter(Boolean)
     .join("&");
 
+  useEffect(() => {
+    if (containerRef.current) {
+      gsap.fromTo(
+        containerRef.current,
+        { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, duration: 1, ease: "power2.out" }
+      );
+    }
+  }, []);
+
   return (
-    <div className={styles.container}>
+    <div className={styles.paper} ref={containerRef}>
       <div className={styles.filters}>
         <SearchFilter defaultValue={q} />
         <CategoryFilter defaultValue={category} />
       </div>
 
-      <div className={styles.grid}>
+      <div className={styles.columns}>
         {articles.map((a) => (
           <NewsCard key={a.url} article={a} />
         ))}

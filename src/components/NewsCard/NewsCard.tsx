@@ -2,16 +2,18 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { CiImageOff } from "react-icons/ci";
 import { Article } from "@/types/article.types";
 import styles from "./NewsCard.module.scss";
+import gsap from "gsap";
 
 interface Props {
   article: Article;
 }
 
 export default function NewsCard({ article }: Props) {
+  const cardRef = useRef<HTMLDivElement>(null);
   const slug = encodeURIComponent(article.title);
   const formattedDate = new Date(article.publishedAt).toLocaleDateString("ru-RU", {
     day: "2-digit",
@@ -19,8 +21,18 @@ export default function NewsCard({ article }: Props) {
     year: "numeric",
   });
 
+  useEffect(() => {
+    if (cardRef.current) {
+      gsap.fromTo(
+        cardRef.current,
+        { autoAlpha: 0, y: 20 },
+        { autoAlpha: 1, y: 0, duration: 0.8, ease: "power3.out" }
+      );
+    }
+  }, []);
+
   return (
-    <div className={styles.card}>
+    <div className={styles.card} ref={cardRef}>
       <div className={styles.poster}>
         {article.urlToImage ? (
           <Image

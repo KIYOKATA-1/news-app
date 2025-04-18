@@ -1,24 +1,32 @@
-.container {
-    padding: 20px;
-    background-color: #f9f9f9;
+.paper {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 40px 30px;
+    background: #fdfdf5; 
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    border: 1px solid #eee;
+    border-radius: 4px;
   }
   
   .filters {
     display: flex;
-    gap: 10px;
+    gap: 12px;
     flex-wrap: wrap;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
   }
   
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 24px;
-    align-items: start;
+  .columns {
+    column-count: 3;
+    column-gap: 24px;
+  }
+  
+  .columns > * {
+    break-inside: avoid;
+    margin-bottom: 24px;
   }
   
   .pagination {
-    margin-top: 24px;
+    margin-top: 32px;
     display: flex;
     gap: 12px;
     justify-content: center;
