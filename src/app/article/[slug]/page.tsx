@@ -1,8 +1,10 @@
-import Image from "next/image";
+"use client";
 
-import { Article } from "@/types/article.types";
+import Image from "next/image";
 import React from "react";
 import { api } from "@/api/api";
+import { Article } from "@/types/article.types";
+import styles from "./ArticlePage.module.scss";
 
 export const dynamic = "force-dynamic";
 
@@ -29,39 +31,51 @@ export default async function ArticlePage({
 
   if (error || !article) {
     return (
-      <main style={{ padding: 20 }}>
-        <h1>Статья недоступна</h1>
-        <p>Не удалось получить данные статьи. Попробуйте позже.</p>
+      <main className={styles.container}>
+        <h1 className={styles.title}>Статья недоступна</h1>
+        <p className={styles.meta}>Не удалось получить данные статьи. Попробуйте позже.</p>
       </main>
     );
   }
 
+  const formattedDate = new Date(article.publishedAt).toLocaleString("ru-RU", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
   return (
-    <main style={{ padding: 20 }}>
-      <h1>{article.title}</h1>
-      <p>
-        <em>
-          {article.author ?? "Unknown"} —{" "}
-          {new Date(article.publishedAt).toLocaleString()}
-        </em>
+    <main className={styles.container}>
+      <h1 className={styles.title}>{article.title}</h1>
+      <p className={styles.meta}>
+        {article.author ?? "Unknown"} — {formattedDate}
       </p>
 
       {article.urlToImage && (
-        <Image
-          src={article.urlToImage}
-          alt={article.title}
-          width={800}
-          height={450}
-          style={{ maxWidth: "100%", height: "auto" }}
-        />
+        <div className={styles.imageWrapper}>
+          <Image
+            src={article.urlToImage}
+            alt={article.title}
+            fill
+            style={{ objectFit: "cover" }}
+          />
+        </div>
       )}
 
-      <p>{article.content ?? article.description}</p>
+      <article className={styles.content}>
+        <p>{article.content ?? article.description}</p>
+      </article>
 
-      <a href={article.url} target="_blank" rel="noopener noreferrer">
-        Читать оригинал
+      <a
+        href={article.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={styles.readOriginal}
+      >
+        Читать оригинал →
       </a>
-
     </main>
   );
 }

@@ -1,6 +1,9 @@
 "use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import React from "react";
+import { CiImageOff } from "react-icons/ci";
 import { Article } from "@/types/article.types";
 import styles from "./NewsCard.module.scss";
 
@@ -10,9 +13,15 @@ interface Props {
 
 export default function NewsCard({ article }: Props) {
   const slug = encodeURIComponent(article.title);
+  const formattedDate = new Date(article.publishedAt).toLocaleDateString("ru-RU", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
+
   return (
-    <Link href={`/article/${slug}`} className={styles.card}>
-      <div className={styles.imageWrapper}>
+    <div className={styles.card}>
+      <div className={styles.poster}>
         {article.urlToImage ? (
           <Image
             src={article.urlToImage}
@@ -21,22 +30,19 @@ export default function NewsCard({ article }: Props) {
             style={{ objectFit: "cover" }}
           />
         ) : (
-          <div className={styles.imageWrapper}>No Image</div>
+          <div className={styles.noImage}>
+            <CiImageOff />
+          </div>
         )}
+        <div className={styles.overlay} />
+        <div className={styles.info}>
+          <h3 className={styles.title}>{article.title}</h3>
+          <p className={styles.date}>{formattedDate}</p>
+          <Link href={`/article/${slug}`} className={styles.button}>
+            Читать больше
+          </Link>
+        </div>
       </div>
-      <div className={styles.content}>
-        <h2 className={styles.title}>{article.title}</h2>
-        <p className={styles.description}>{article.description || ""}</p>
-      </div>
-      <div className={styles.date}>
-        {(() => {
-          const d = new Date(article.publishedAt);
-          const day = String(d.getDate()).padStart(2, "0");
-          const month = String(d.getMonth() + 1).padStart(2, "0");
-          const year = d.getFullYear();
-          return `${day}.${month}.${year}`;
-        })()}
-      </div>
-    </Link>
+    </div>
   );
 }

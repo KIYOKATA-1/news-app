@@ -37,15 +37,18 @@ export default function NewsList({
         <SearchFilter defaultValue={q} />
         <CategoryFilter defaultValue={category} />
       </div>
+
       <div className={styles.grid}>
         {articles.map((a) => (
           <NewsCard key={a.url} article={a} />
         ))}
       </div>
+
       <div className={styles.pagination}>
         {page > 1 && (
           <Link
             href={`/?${params.replace(`page=${page}`, `page=${page - 1}`)}`}
+            className={styles.pageLink}
           >
             ← Назад
           </Link>
@@ -53,6 +56,7 @@ export default function NewsList({
         {page < totalPages && (
           <Link
             href={`/?${params.replace(`page=${page}`, `page=${page + 1}`)}`}
+            className={styles.pageLink}
           >
             Вперед →
           </Link>

@@ -1,0 +1,55 @@
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    background-color: #141414;
+    color: #fff;
+    min-height: 100vh;
+  }
+  
+  .title {
+    font-size: 2.5rem;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+  
+  .meta {
+    font-size: 0.9rem;
+    color: #888;
+    margin-bottom: 24px;
+  }
+  
+  .imageWrapper {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%; 
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 24px;
+  
+  }
+  
+  .content {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #ddd;
+    margin-bottom: 32px;
+  
+    p {
+      margin-bottom: 1em;
+    }
+  }
+  
+  .readOriginal {
+    display: inline-block;
+    color: #e50914;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: opacity 0.2s;
+  
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+  
