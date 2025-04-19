@@ -6,11 +6,15 @@ import Image from "next/image";
 import { Article } from "@/types/article.types";
 
 interface Params {
-  params: { slug: string };
+  slug: string;
 }
 
-export default async function ArticlePage({ params }: Params) {
-  const { slug } = params;
+export default async function ArticlePage({
+  params,
+}: {
+  params: Promise<Params>;
+}) {
+  const { slug } = await params;
   const title = decodeURIComponent(slug);
 
   let article: Article | null = null;
