@@ -1,16 +1,15 @@
+export const dynamic = "force-dynamic";
+
 import { fetchTopHeadlines } from "@/api/news.api";
 import NewsList from "@/components/NewsList/NewsList";
 import { Article } from "@/types/article.types";
-import React from "react";
 
-export const dynamic = "force-dynamic";
+interface Props {
+  searchParams: { q?: string; category?: string; page?: string };
+}
 
-export default async function Home({
-  searchParams,
-}: {
-  searchParams: Promise<{ q?: string; category?: string; page?: string }>;
-}) {
-  const { q = "", category = "", page: pageRaw = "1" } = await searchParams;
+export default async function Home({ searchParams }: Props) {
+  const { q = "", category = "", page: pageRaw = "1" } = searchParams;
   const page = parseInt(pageRaw, 10);
 
   let articles: Article[] = [];
