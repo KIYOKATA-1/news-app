@@ -8,7 +8,7 @@ export async function fetchTopHeadlines(
 ): Promise<{ articles: Article[]; totalResults: number }> {
   const resp = await api.get("/top-headlines", {
     params: {
-      apiKey: process.env.NEWS_API_KEY,
+      apiKey: process.env.NEXT_PUBLIC_NEWS_API_KEY,
       country: "us",
       pageSize: 10,
       page,
@@ -22,7 +22,7 @@ export async function fetchTopHeadlines(
 export async function fetchSingleArticle(title: string): Promise<Article | null> {
   const resp = await api.get("/everything", {
     params: {
-      apiKey: process.env.NEWS_API_KEY,
+      apiKey: process.env.NEXT_PUBLIC_NEWS_API_KEY,
       qInTitle: title,
       pageSize: 1,
     },
